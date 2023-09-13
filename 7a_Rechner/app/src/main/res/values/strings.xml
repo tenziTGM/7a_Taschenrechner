@@ -9,5 +9,6 @@
     <string name="calculate">Berechnen</string>
     <string name="ms">MS</string>
     <string name="mr">MR</string>
+    <string name="result_default">0</string>
 
 </resources>
