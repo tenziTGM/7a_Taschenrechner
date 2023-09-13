@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Rechner_tenzi</string>
+    <string name="wert1">Wert 1</string>
+    <string name="wert2">Wert 2</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="multiply">*</string>
+    <string name="divide">/</string>
+    <string name="calculate">Berechnen</string>
+    <string name="ms">MS</string>
+    <string name="mr">MR</string>
+
 </resources>
