@@ -1,4 +1,4 @@
-package com.example.rechner_tenzi;
+package com.example.tenzi_rechner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.rechner_tenzi.R;
+
+import java.util.Spliterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,20 +46,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void calculate(View view) {
-        EditText input1 = view.findViewById(R.id.edit_wert1);
-        int value1 = Integer.parseInt(input1.getText().toString());
+    public void calculate(View v) {
+        EditText input1 = findViewById(R.id.edit_wert1);
+        double value1 = Double.parseDouble(input1.getText().toString());
 
-        EditText input2 = view.findViewById(R.id.edit_wert2);
-        int value2 = Integer.parseInt(input2.getText().toString());
+        Log.i("App","Value1 geholt");
+        EditText input2 = findViewById(R.id.edit_wert2);
+        double value2 = Double.parseDouble(input2.getText().toString());
 
-        RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
         int radioButtonId = radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = findViewById(radioButtonId);
 
-        TextView result = view.findViewById(R.id.textview_result);
+        TextView result = findViewById(R.id.textview_result);
 
-        int result_value = 0;
+        double result_value = 0;
 
         switch(radioButton.getText().toString()) {
             case "+":
@@ -80,35 +87,40 @@ public class MainActivity extends AppCompatActivity {
         else {
             result.setTextColor(Color.BLACK);
         }
-        result.setText(result_value);
+        result.setText(String.valueOf(result_value));
 
 
 
     }
 
     public void saveValues(View view) {
-        EditText input1 = view.findViewById(R.id.edit_wert1);
-        int value1 = Integer.parseInt(input1.getText().toString());
+        EditText input1 = findViewById(R.id.edit_wert1);
+        double value1 = Double.parseDouble(input1.getText().toString());
 
-        EditText input2 = view.findViewById(R.id.edit_wert2);
-        int value2 = Integer.parseInt(input2.getText().toString());
+        EditText input2 = findViewById(R.id.edit_wert2);
+        double value2 = Double.parseDouble(input2.getText().toString());
 
         SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("value1",value1);
-        editor.putInt("value2",value2);
+        editor.putFloat("value1",(float)value1);
+        editor.putFloat("value2",(float)value2);
         editor.commit();
+
+        Context context = getApplicationContext();
+        CharSequence text = "Gespeichert!";
+        Toast toast = Toast.makeText(context,text,Toast.LENGTH_SHORT);
+        toast.show();
     }
     public void readValues(View view) {
         SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
 
-        EditText input1 = view.findViewById(R.id.edit_wert1);
-        int value1 = sharedPreferences.getInt("value1",0);
-        input1.setText(value1);
+        EditText input1 = findViewById(R.id.edit_wert1);
+        double value1 = sharedPreferences.getFloat("value1",0);
+        input1.setText(String.valueOf(value1));
 
-        EditText input2 = view.findViewById(R.id.edit_wert2);
-        int value2 = sharedPreferences.getInt("value2",0);
-        input2.setText(value2);
+        EditText input2 = findViewById(R.id.edit_wert2);
+        double value2 = sharedPreferences.getFloat("value2",0);
+        input2.setText(String.valueOf(value2));
     }
 
 }

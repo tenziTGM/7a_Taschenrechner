@@ -1,4 +1,4 @@
-package com.example.rechner_tenzi;
+package com.example.tenzi_rechner;
 
 import org.junit.Test;
 
