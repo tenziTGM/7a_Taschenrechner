@@ -20,8 +20,18 @@ import com.example.rechner_tenzi.R;
 
 import java.util.Spliterator;
 
+/**
+ *
+ * MainActivity
+ * @author Timo Enzi
+ * @version 2023-09-14
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * nach dieser Methode befindet sich die Activity im running-state.
+     * Der Button wird grün und signalisiert die Bereitschaft.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -29,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         calculate.setBackgroundColor(Color.GREEN);
     }
 
+
+    /**
+     * onCreate()-Methode
+     * ein onTouch Listener wird für das Ergebnis Feld erstellt.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
         TextView result = findViewById(R.id.textview_result);
         result.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                result.setText(0);
+            public boolean onTouch(View v, MotionEvent event) {
+                result.setText("0");
+                result.setTextColor(Color.WHITE);
                 return true;
             }
         });
@@ -46,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Berechnet das Ergebnis anhand der eingegeben Werte und der ausgewählten Rechenart.
+     * @param v View
+     */
     public void calculate(View v) {
         EditText input1 = findViewById(R.id.edit_wert1);
         double value1 = Double.parseDouble(input1.getText().toString());
@@ -62,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         double result_value = 0;
 
-        switch(radioButton.getText().toString()) {
+        switch(radioButton.getText().toString()) { // es wird gecheckt, welche Rechenart ausgewählt ist.
             case "+":
                 result_value = value1+value2;
                 break;
@@ -87,12 +108,16 @@ public class MainActivity extends AppCompatActivity {
         else {
             result.setTextColor(Color.BLACK);
         }
-        result.setText(String.valueOf(result_value));
+        result.setText(String.valueOf(result_value)); // Das Ergebnis wird angezeigt
 
 
 
     }
 
+    /**
+     * Speichert die eingegeben Werte.
+     * @param view View
+     */
     public void saveValues(View view) {
         EditText input1 = findViewById(R.id.edit_wert1);
         double value1 = Double.parseDouble(input1.getText().toString());
@@ -104,13 +129,18 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putFloat("value1",(float)value1);
         editor.putFloat("value2",(float)value2);
-        editor.commit();
+        editor.commit(); // die Werte die zuvor reingeladen wurden, werden commited.
 
         Context context = getApplicationContext();
         CharSequence text = "Gespeichert!";
         Toast toast = Toast.makeText(context,text,Toast.LENGTH_SHORT);
-        toast.show();
+        toast.show(); // der Gepeichert! Text wird durch einen Toast angezeigt.
     }
+
+    /**
+     * Setzt die gespeicherten Werte in die Eingabefelder ein.
+     * @param view View
+     */
     public void readValues(View view) {
         SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
 
